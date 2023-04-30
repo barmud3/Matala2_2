@@ -22,10 +22,20 @@ int main(int argc, char const *argv[])
         return 1;
     }
     FILE* f1 = fopen(argv[1],"r");
-    FILE* f2 = fopen(argv[2],"a");
-    if (f1 == NULL || f2 == NULL)
+    FILE* f2;
+    if(f1 != NULL)
     {
-        printf("File not found/cann't be open\n");
+        f2 = fopen(argv[2],"a");
+        if (f2 == NULL)
+        {
+            printf("can't open/find file: %s\n",argv[2]);
+            fclose(f1);
+            exit(1);
+        } 
+    }
+    else
+    {
+        printf("can't open/find file: %s\n",argv[1]);
         exit(1);
     }
     if (argc == 3) //without flags

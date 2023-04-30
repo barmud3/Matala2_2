@@ -10,8 +10,8 @@ void (*codecBReverse)(char*);
 
 bool init_library()
 {
-    void* hdl1 = dlopen("./libCodecA.so",RTLD_LAZY);
-    void* hdl2 = dlopen("./libCodecB.so",RTLD_LAZY);
+    void* hdl1 = dlopen("./libcodecA.so",RTLD_LAZY);
+    void* hdl2 = dlopen("./libcodecB.so",RTLD_LAZY);
     if (NULL == hdl1 || NULL == hdl2)
     {
         return false;
