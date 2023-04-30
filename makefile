@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Werror
-LDFLAGS = -L. -lcodecA -lcodecB
+LDFLAGS = -L. -lcodecA -lcodecB -ldl
 LIBS = -lm
 
 all: copy cmp encode decode stshell
