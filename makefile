@@ -1,15 +1,34 @@
-all: copy cmp encode decode
+CC = gcc
+CFLAGS = -Wall -Werror
+LDFLAGS = -L. -lcodecA -lcodecB
+LIBS = -lm
 
+all: copy cmp encode decode stshell
 
-copy: copy.c
-	gcc copy.c -o copy
-cmp: cmp.c
-	gcc cmp.c -o cmp
-encode: encode.c libCodecA libCodecB
-	gcc encode.c -L. -l CodecA -l CodecB -o encode
-decode: decode.c libCodecB libCodecB
-	gcc decode.c -L. -l CodecA -l CodecB -o decode
-libCodecA: sensetive.c
-	gcc -o libCodecA.so -shared -fpic sensetive.c
-libCodecB: 3-rdNext.c
-	gcc -o libCodecB.so -shared -fpic 3-rdNext.c
+copy: copy.c libcodecA.so libcodecB.so
+	$(CC) $(CFLAGS) -o copy copy.c $(LDFLAGS) $(LIBS)
+
+cmp: cmp.c libcodecA.so libcodecB.so
+	$(CC) $(CFLAGS) -o cmp cmp.c $(LDFLAGS) $(LIBS)
+
+encode: encode.c libcodecA.so
+	$(CC) $(CFLAGS) -o encode encode.c $(LDFLAGS) $(LIBS)
+
+decode: decode.c libcodecB.so
+	$(CC) $(CFLAGS) -o decode decode.c $(LDFLAGS) $(LIBS)
+
+stshell: stshell.c 
+	$(CC) $(CFLAGS) -o stshell stshell.c $(LDFLAGS) $(LIBS)
+
+libcodecA.so: codecA.c 
+	$(CC) $(CFLAGS) -fPIC -c codecA.c
+	$(CC) $(CFLAGS) -shared -o libcodecA.so codecA.o
+
+libcodecB.so: codecB.c 
+	$(CC) $(CFLAGS) -fPIC -c codecB.c
+	$(CC) $(CFLAGS) -shared -o libcodecB.so codecB.o
+
+clean:
+	rm -f copy cmp encode decode stshell libcodecA.so libcodecB.so *.o
+
+.DEFAULT_GOAL := all
