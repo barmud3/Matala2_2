@@ -17,7 +17,7 @@ encode: encode.c libcodecA.so
 decode: decode.c libcodecB.so
 	$(CC) $(CFLAGS) -o decode decode.c $(LDFLAGS) $(LIBS)
 
-stshell: stshell.c 
+stshell: stshell.c stshell.h
 	$(CC) $(CFLAGS) -o stshell stshell.c $(LDFLAGS) $(LIBS)
 
 libcodecA.so: codecA.c 
